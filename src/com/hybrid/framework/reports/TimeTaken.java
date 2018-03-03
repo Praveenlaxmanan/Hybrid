@@ -331,3 +331,36 @@ Thread.sleep(500);
 	
 
 }
+
+
+//Switch window	
+	public static WebDriver switchToWindow(String pageTitle){
+		
+		for(String id : driver.getWindowHandles()){
+			
+			driver.switchTo().window(id);
+			
+			if(driver.getTitle().contains(pageTitle)){
+				
+				return driver.switchTo().window(id);
+				
+			}
+			
+			
+		}
+		
+		return driver;
+		
+	}
+	
+//Switch main window
+	public static WebDriver mainWindow(){
+		
+		for(String id : driver.getWindowHandles()){
+			
+			return driver.switchTo().window(id);
+			
+		}
+		return driver;
+		
+	}
