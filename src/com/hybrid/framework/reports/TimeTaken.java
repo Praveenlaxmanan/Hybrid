@@ -364,3 +364,138 @@ Thread.sleep(500);
 		return driver;
 		
 	}
+
+
+package com.selenium.test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class WebTables {
+
+    public static WebDriver driver;
+    public static String headerColVal =  null;
+    public static int i = 0;
+    public static List<String> ls = new ArrayList<String>();
+    public static List<String> lsSecRow = new ArrayList<String>();
+    public static List<String> lsActualVal = new ArrayList<String>();
+    
+    public static void getValues(){
+    
+        try{
+        
+        String primaryHeaderColName = "Country";
+        String primaryRowName = "Taipei 101";
+        
+        String secRow = "Taiwan|Taipei|509m|2004|3|details";
+        
+        String[] secRowVal = secRow.split("\\|");
+        
+        for(int secRowValue = 0; secRowValue < secRowVal.length; secRowValue++){
+            
+            lsSecRow.addAll(Arrays.asList(secRowVal[secRowValue]));
+            
+        }
+        
+            System.setProperty("webdriver.chrome.driver", "Input/chromedriver.exe");
+            driver = new ChromeDriver();
+            driver.get("http://toolsqa.com/automation-practice-table");
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            driver.manage().window().maximize();
+
+            WebDriverWait wait = new WebDriverWait(driver, 30);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='content']/table/thead/tr/th")));
+
+            List<WebElement> headerCol = driver.findElements(By.xpath("//div[@id='content']/table/thead/tr/th"));    
+
+            for(i = 1; i < headerCol.size(); i++){
+
+                headerColVal = driver.findElement(By.xpath("//div[@id='content']/table/thead/tr/th["+i+"]")).getText();
+                ls.add(headerColVal);
+
+            }
+
+            for(int ii = 0; ii < ls.size(); ii++){
+                String vals = ls.get(ii);
+                if(vals.equalsIgnoreCase(primaryHeaderColName)){
+
+                    //Get the primary rows names
+                    List<WebElement> primaryHeaderRows = driver.findElements(By.xpath("//div[@id='content']/table/tbody/tr/th"));
+                    //Get primary row size
+                    System.out.println("primaryHeaderRows :"+primaryHeaderRows.size());
+                    //Looping through to get the rows
+                    for(int priRowNames = 1; priRowNames <= primaryHeaderRows.size(); priRowNames++){
+
+                        String strPrimaryRowsNames =  driver.findElement(By.xpath("//div[@id='content']/table/tbody/tr["+priRowNames+"]/th")).getText();
+
+                        if(strPrimaryRowsNames.equalsIgnoreCase(primaryRowName)){
+                            for(int getCol = 1; getCol < headerCol.size(); getCol++){
+                                //Get the table data
+                                String getColData = driver.findElement(By.xpath("//div[@id='content']/table/tbody/tr["+priRowNames+"]/td["+getCol+"]")).getText();
+//                                System.out.println("Column Values :"+getColData);
+                                lsActualVal.add(getColData);
+                                
+                            }
+                        }
+                    }    
+                }
+            }
+
+            
+            for(int x = 0; x < lsSecRow.size(); x++){
+                
+                
+                for(int y = 0; y < lsActualVal.size(); y++){
+                    
+                    if(lsSecRow.get(x).equalsIgnoreCase(lsActualVal.get(y))){
+                        
+                        System.out.println("Actual value is '"+lsActualVal.get(y)+"' matched with the expected value '"+lsSecRow.get(x)+"' ");
+                        
+                    }
+                }
+            }
+            
+            
+        }catch(Exception e){
+
+            e.printStackTrace();
+        }
+
+        driver.quit();
+
+    }
+
+    
+    public static void main(String[] args) {
+        
+        getValues();
+        
+    }
+    
+    
+}
+
+//************************
+du -sh - > To check the folders size
+df -h - > To check the drive details
+
+
+grep 
+
+xargs
+
+ ps -ef | grep -i rrbs | cut -d " " -f2 | xargs kill -9 
+
+ls -lrt | xargs rm -rf
+/**************************
+
+SELECT name, MAX(salary) as salary FROM employee select MAX(FaveValue) as FaveValue from tablename
