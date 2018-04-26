@@ -847,3 +847,833 @@ public static void dateDifference(){
 
     }
 
+
+// ************Latest *****************
+
+package com.selenium.test;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Scanner;
+
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class Quiz {
+
+
+
+	public static XSSFWorkbook workbook;
+	public static XSSFSheet sheet;
+	public static XSSFCell cell = null;
+	public static String path = "Input/Book1.xlsx";
+	public static FileInputStream fs = null;
+
+	public static void readExcel(){
+
+		try{
+
+			fs = new FileInputStream(path);
+			workbook = new XSSFWorkbook(fs);
+			sheet = workbook.getSheet("Sheet1");
+			int rowCount = sheet.getLastRowNum();
+			int columnCount = sheet.getRow(rowCount).getLastCellNum();
+
+			for(int i = 0; i <= rowCount; i++){
+				XSSFRow row = sheet.getRow(i);
+
+				for(int j = 0; j < columnCount; j++){
+					cell = row.getCell(j);
+					String excelData = cell.getStringCellValue();
+					System.out.println("excelData :"+excelData);
+
+				}
+
+			}
+
+		}catch(Exception e){
+
+			e.printStackTrace();
+			//            System.out.println(e.getMessage());
+		}
+
+	}
+
+
+	public static void writeExcel(){
+
+		try{
+
+			fs = new FileInputStream(path);
+			workbook = new XSSFWorkbook(fs);
+
+			sheet = workbook.getSheet("Sheet1");
+
+			cell = sheet.getRow(1).getCell(0);
+			cell.setCellValue("NewlyUpdated1");
+
+
+			//Closing the Workbook
+
+			FileOutputStream outputFile = new FileOutputStream(new File(path));
+			workbook.write(outputFile);
+			outputFile.close();
+
+
+		}catch(Exception e){
+
+			e.printStackTrace();
+
+		}
+
+	}
+
+
+	public static void createValuesInExcel(){
+
+		try{
+
+			fs = new FileInputStream(path);
+			workbook = new XSSFWorkbook(fs);
+			sheet = workbook.getSheet("Sheet1");
+
+			String[] values = {"one", "two", "three", "four", "five"};
+			for(int rowItr=0; rowItr < 1; rowItr ++){
+				XSSFRow row = sheet.createRow(rowItr);
+				for(int i = 0; i < values.length; i++){
+					row.createCell(i).setCellValue(values[i]);
+				}
+			}
+			//Closing the Workbook
+			FileOutputStream outputFile = new FileOutputStream(new File(path));
+			workbook.write(outputFile);
+			outputFile.close();
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	public static boolean palindrome(String input){
+
+		boolean status = false;
+		int j = 0;
+
+		String reverse = "";
+		for(int i=input.length()-1; i >= 0; i--){
+
+			reverse = reverse + input.charAt(i);
+			if(input.equalsIgnoreCase(reverse)){
+				j = 1;
+			}else if(!(input.equalsIgnoreCase(reverse))){
+
+			}
+		}
+
+		if(j == 1){
+			System.out.println("Given value is palindrome");
+			status = true;
+		}else{
+			System.out.println("Given value is not palindrome");
+		}
+		return status;
+	}
+
+	public static void stringWordsReverse(){
+
+		String inputValue = "I am a robitics developer";
+		String rev = "";
+
+		String[] splitValue = inputValue.split(" ");
+
+		for(int i = splitValue.length-1; i >= 0; i--){
+
+			rev = rev + splitValue[i];
+			System.out.println(rev);
+
+		}
+
+	}
+
+	public static void matrixAddition(){
+
+		int a, b, i, j = 0;
+
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Enter the no of Rows and Columns");
+
+		a = scanner.nextInt();
+		b = scanner.nextInt();
+
+		int first[][] = new int[a][b];
+		int second[][] = new int[a][b];
+		int sum[][] = new int[a][b];
+
+		System.out.println("Enter the value of first matrix");
+
+		for(i=0; i < a; i++)
+			for(j=0; j < b; j++)
+				first[i][j] = scanner.nextInt();
+
+		System.out.println("Enter the value of second matrix");
+
+		for(i=0; i < a; i++)
+			for(j=0; j < b; j++)
+				second[i][j] = scanner.nextInt();
+
+		System.out.println("Sum of matrix");
+
+		for(i=0; i<a; i++)
+			for(j=0; j < b; j++)
+				sum[i][j] = first[i][j] + second[i][j];
+
+		for(i=0; i < a; i++){
+
+			for(j = 0; j < b; j++)
+
+				System.out.print(sum[i][j]+"\t");
+			System.out.println();
+
+		}
+
+	}
+
+	public static void stringReverse(){
+
+		String value = "autoTest";
+
+		for(int i = value.length()-1; i >= 0; i--){
+
+			char opt = value.charAt(i);
+			System.out.println(opt);
+		}
+
+	}
+
+	public static void dateFormat(){
+
+		Date date = new Date();
+		SimpleDateFormat dateForamt = new SimpleDateFormat("dd/MMM/yyyy");
+		String todayDate = dateForamt.format(date);
+		System.out.println("todayDate :"+todayDate);
+
+	}
+
+	public static void asce(){
+
+		int[] values = {5,6,9,3,2,1,0,4,8,7};
+
+		bubbleSort(values, "asce");
+
+		for(int i = 0; i < values.length; i++){
+
+			System.out.println(values[i]);
+
+		}
+
+	}
+
+	public static void bubbleSort(int[] valules, String order){
+
+		int temp = 0;
+		int valLength = valules.length;
+
+		for(int i = 0; i <= valLength; i++){
+
+			for(int j = 1; j < (valLength - i); j++){
+
+				if(order.equalsIgnoreCase("asce")){
+
+					if(valules[j-1] > valules[j]){
+
+						temp = valules[j-1];
+						valules[j-1] = valules[j];
+						valules[j] = temp;
+
+					}
+				}else if(order.equalsIgnoreCase("desc")){
+
+					if(valules[j-1] < valules[j]){
+
+						temp = valules[j-1];
+						valules[j-1] = valules[j];
+						valules[j] = temp;
+
+					}
+				}
+			}
+		}
+	}
+
+	public static void minMax(){
+
+		int[] values = {5,0,3,6,2,1,4,9,8,7};
+
+		int val = minMaxSort(values);
+
+		System.out.println(val);
+	}
+
+	public static int minMaxSort(int[] values){
+		int minMaxval = values[0];
+		for(int i=0; i < values.length; i++){
+			if(values[i] < minMaxval){
+				minMaxval = values[i];
+			}
+		}
+		return minMaxval;
+	}
+
+	public static void secondMaxMin(){
+
+		int[] values = {0,5,2,7};
+
+		int first = values[0];
+		int second = values[0];
+
+		for(int i =0; i<values.length; i++){
+
+			if(values[i] > first){
+				second = first;
+				first = values[i];
+			}else if(values[i] > second){
+
+				second = values[i];
+				System.out.println("If else :"+second);
+
+			}
+
+		}
+
+		System.out.println(second);
+
+	}
+
+	public static void duplicateArrays(){
+
+		int[] values = {7,5,3,2,6,2,1,2,3,5,4,1,5,8,9,5,5,0,6,0};
+
+		for(int i =0; i < values.length; i++){
+
+			for(int j = i+1; j < values.length; j++){
+
+				if(values[i] == values[j] && (i != j)){
+
+					System.out.println("Duplicates :"+values[j]);
+
+				}
+
+			}
+
+		}
+
+	}
+
+	public static void loop1(){
+
+		for(int i=1; i < 6; i++){
+			for(int j=0; j < i; j++){
+				System.out.print(" "+i);
+			}
+			System.out.println();
+		}
+	}
+
+	public static void loop2(){
+
+		for(int i=2; i < 6; i++){
+			for(int j=1; j < i; j++){
+				System.out.print(" "+j);
+			}
+			System.out.println();
+		}
+	}
+
+	public static void lowerToUpper(String value){
+
+		Character charac = null;
+		String returnVal = null;
+
+		for(int i=0; i <=value.length()-1; i++){
+
+			charac = value.charAt(i);
+			returnVal = charac.toString();
+
+			if(returnVal.equals(returnVal.toUpperCase())){
+
+				String lowerCase = returnVal.toLowerCase();
+				System.out.println("lowerCase :"+lowerCase);
+
+			}else if(returnVal.equals(returnVal.toLowerCase())){
+
+				String upperCase = returnVal.toUpperCase();
+				System.out.println("upperCase :"+upperCase);
+
+			}
+		}
+	}
+
+	public static int findMinDist(int[] arr, int n, int x, int y){
+
+		int i,j;
+
+		int min_dist = Integer.MAX_VALUE;
+
+		for(i=0; i<n; i++){
+
+			for(j=i+1; j<n; j++){
+
+				if( (x == arr[i] && y == arr[j] || y == arr[i] && x == arr[j]) && min_dist > Math.abs(i - j) )
+
+					min_dist = Math.abs(i - j);
+
+			}
+		}
+
+		return min_dist;
+	}
+
+	public static int findMinDiff(int[] arr, int n)
+	{
+		// Initialize difference as infinite
+		int diff = Integer.MAX_VALUE;
+
+		// Find the min diff by comparing difference
+		// of all possible pairs in given array
+		for (int i=0; i<n-1; i++)
+			for (int j=i+1; j<n; j++)
+				if (Math.abs((arr[i] - arr[j]) )< diff)
+					diff = Math.abs((arr[i] - arr[j]));
+
+		// Return min diff  
+		return diff;
+	}
+
+	public static void pairsDiff(){
+
+
+		int[] a = new int[] {4, 9, 1, 32, 13};
+		Arrays.sort(a);
+		int minDiff = a[1]-a[0];
+		for (int i = 2 ; i != a.length ; i++) {
+			minDiff = Math.min(minDiff, a[i]-a[i-1]);
+		}
+		System.out.println(minDiff);
+
+
+	}
+
+	public static int getRandom(int[] array, int value){
+		for(int i=0; i < array.length; i++){
+			if(array[i] == value){
+				//				System.out.println(array[i]);
+				return array[i];
+			}
+		}
+		return 0;
+	}
+
+	public static void test(){
+
+		int[] n = {-5, 1, 9, -3, 4, 8, -9, 0};
+
+		int temp = 0;
+		int x = getRandom(n, -9);
+		int y = getRandom(n, -5);
+
+		if(x < y){
+			int count = 0;
+			for(int i=x; i < y; i++){
+				count++;
+			}
+			System.out.println("if "+count);
+
+		} else if(x > y){
+
+			temp = x;
+			x = y;
+			y = temp;
+			int count = 0;
+			for(int i=x; i < y; i++){
+				count++;
+			}
+			System.out.println("Else " +count);
+		}
+	}
+
+	public static int LCM(int x, int y){
+
+		int a;
+
+		a = (x > y )? x : y;
+
+		while(true){
+
+			if(a % x==0 && a % y==0){
+
+				System.out.println(a);
+				System.out.println(0.0%0.0!=0.0/0.0);
+				return a;
+
+
+
+			}
+
+			a++;
+		}
+
+	}
+
+	public static void fibonacci(){
+		int t1 = 0, t2 = 1;
+		for(int i=0; i <= 10; i++){
+			int sum = t1 + t2;
+			System.out.print(" "+sum);
+			t1=t2;
+			t2=sum;
+		}
+	}
+
+	public static void elevator(){
+		int floor = 0;
+		Scanner scanner = new Scanner(System.in);
+		floor = scanner.nextInt();
+	}
+
+	public static void oneEightyDegreeLoop(int n){
+		int i, j, k=2*n-2;
+		for(i=0; i < n; i++){
+			for(j = 0; j < k; j++){
+				System.out.print(" ");
+			}
+			k = k-2;
+			for(j=0; j <= i; j++){
+				System.out.print("* ");
+			}
+			System.out.println();
+		}
+	}
+
+	public static void triangleLoop(int n){
+
+		int i, j, k=2*n-2;
+		for(i=0; i < n; i++){
+			for(j = 0; j < k; j++){
+				System.out.print(" ");
+			}
+			k = k-1;
+			for(j=0; j <= i; j++){
+				System.out.print("* ");
+			}
+			System.out.println();
+		}
+	}
+
+	public static void noAddLoops(){
+
+		int no = 1;
+		for(int i = 0; i < 5; i++){
+			for(int j = 0; j <= i; j++){
+				System.out.print(no+" ");
+				no = no + 1;
+			}
+			System.out.println();
+		}
+	}
+
+	public static void thoughtWor(int n){
+		int k = 2*n-5;
+		int num = 1;
+		int i, j = 0;
+		for(i=0; i < n; i++){
+			for(j = 0; j < k; j++){
+				System.out.print(" ");
+			}
+			for(j=0; j <= i; j++){
+				System.out.print(num);
+			}
+			for(j = 0; j < k; j++){
+				System.out.print(" ");
+			}
+			k = k-1;
+			System.out.println();
+		}
+	}
+
+	public static void forLoopOddEven(int[] values){
+		for(int i = 0; i < values.length; i++){
+			if(values[i] % 2 == 0 ){
+				System.out.println("Given values are even no's :"+values[i]);
+			}else if(values[i] % 2 != 0){
+				System.out.println("Given values are odd no's :"+values[i]);
+			}
+		}
+	}
+
+	public static void primeNos(){
+		int i, num=0;
+		String prime = "";
+		for(i=0; i < 100; i++){
+			int count =0;
+			for(num = i; num > 0; num--){
+				if(i % num == 0){
+					count = count +1;
+				}
+			}
+
+			if(count ==2){
+				prime = prime + i +" ";
+			}
+		}
+
+		System.out.println(prime);
+	}
+
+	public static void compareTosameStrValues(){
+		String s1 = "heart";
+		String s2 = "earth";
+		for(int i=s1.length()-1; i>=0; i--){
+			char ch1 = s1.charAt(i); 
+			String chr1 = String.valueOf(ch1);
+			for(int j = s2.length()-1; j>=0; j--){
+				char ch2 = s2.charAt(j);
+				String chr2 = String.valueOf(ch2);
+				if(chr1.equalsIgnoreCase(chr2)){
+					System.out.println(chr1+" : "+chr2);
+				}
+			}
+		}
+	}
+
+	public static int[] removeDuplicates(int[] input)
+	{
+		int j = 0;
+		int i = 1;
+		// return if the array length is less than 2
+		if (input.length < 2)
+		{
+			return input;
+		}
+		while (i < input.length)
+		{
+			if (input[i] == input[j])
+			{
+				i++;
+			}
+			else
+			{
+				input[++j] = input[i++];
+			}
+		}
+		int[] output = new int[j + 1];
+		for (int k = 0; k < output.length; k++)
+		{
+			output[k] = input[k];
+		}
+		return output;
+	}
+
+	public static void removeduplicateArray(){
+		int[] val = {2, 3, 6, 6, 8};
+		int[] n = removeDuplicates(val);
+		for(int i = 0; i < n.length; i++){
+			System.out.println(val[i]);
+		}
+	}
+
+
+	public static void matrixReverse(){
+
+		String a = "1 2 3 "
+				+ "4 5 6 "
+				+ "7 8 9";
+
+		System.out.println(a);
+
+	}
+
+	public static void concat1(String s1){
+
+		s1 = s1 + "process";
+		System.out.println(s1);
+	}
+
+	public static void concat2(StringBuilder s2){
+
+		s2.append("process");
+
+	}
+
+
+	public static void concat3(StringBuffer s3){
+
+		s3.append("process");
+
+	}
+	
+	
+	public static void getInputValues(){
+
+        FileInputStream fs = null;
+        XSSFWorkbook wb = null;
+        XSSFSheet sheet = null;
+        XSSFRow row = null;
+        XSSFCell cell = null;
+
+
+        try{
+
+            fs = new FileInputStream(new File("Input/Auto_Process.xlsx"));
+            wb = new XSSFWorkbook(fs);
+            sheet = wb.getSheet("Sheet1");
+
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for(int i= 0; i < rowCount; i++){
+
+                row = sheet.getRow(0);
+                int columnCount = row.getPhysicalNumberOfCells();
+
+                for(int j = 0; j < columnCount; j++){
+
+                    cell = row.getCell(j);
+                    String values = cell.getStringCellValue();
+
+                    if(values.equalsIgnoreCase("Flag")){
+
+                        row = sheet.getRow(i);
+                        cell = row.getCell(j);
+
+                        String opt = cell.getStringCellValue();
+                        //                    System.out.println(opt);
+
+                        if(opt.equalsIgnoreCase("Yes")){
+
+                            for(int k = 0; k < row.getPhysicalNumberOfCells(); k++){
+
+                                cell = row.getCell(k);
+                                String flagYes = cell.getStringCellValue();
+                                System.out.println(flagYes);
+
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+        }catch(Exception e){
+
+
+        }
+    }
+
+
+
+
+	/*File file = new File("Cookies.data");							
+    try		
+    {	  
+        // Delete old file if exists
+		file.delete();		
+        file.createNewFile();			
+        FileWriter fileWrite = new FileWriter(file);							
+        BufferedWriter Bwrite = new BufferedWriter(fileWrite);							
+        // loop for getting the cookie information 		
+
+        // loop for getting the cookie information 		
+        for(Cookie ck : driver.manage().getCookies())							
+        {			
+            Bwrite.write((ck.getName()+";"+ck.getValue()+";"+ck.getDomain()+";"+ck.getPath()+";"+ck.getExpiry()+";"+ck.isSecure()));																									
+            Bwrite.newLine();             
+        }			
+        Bwrite.close();			
+        fileWrite.close();	
+
+    }
+
+
+
+	Cookie ck = new Cookie(name,value,domain,path,expiry,isSecure);			
+    System.out.println(ck);
+    driver.manage().addCookie(ck);*/
+
+	/*Break the software Testing:
+
+		No data input validation
+		Boundaries not checked (very big values, very small values)
+		Missing error handling (causing the system loose connection). Disk full etc.
+		Interface errors detected only once the system is tested end to end
+		Problems with invalid characters
+		Problems with strings too long
+		Problems with empty values
+		Problems with data combinations not obvious
+
+		When system brekage testing is happened:
+		Testers has been missed the requirements
+		Testers not identified the major bugs
+		Testers didn't understand the what customers expecting and needs
+
+
+		Boundry value analysis:
+
+		I would like to add one formulae here for boundary value.
+		n, n+1, n-1 one can use this formulae to calculate BV. It can be used for min and max value. As in the above example. 1-1000
+		BV= 1,2,0 and 1000,1001,999*/
+
+
+	public static void main(String[] args) {
+
+
+		String s1 = "Auto ";
+		concat1(s1);
+		System.out.println("String "+s1);
+
+		StringBuilder s2 = new StringBuilder("Auto ");
+		concat2(s2);
+		System.out.println("String builder :"+s2);
+
+		StringBuffer s3 = new StringBuffer("Auto ");
+		concat3(s3);
+		System.out.println("String buffer :"+s3);
+
+		oneEightyDegreeLoop(5);
+		//		LCM(6, 8);
+		//		test();
+		primeNos();
+		//int[] arr = {-1, 1};
+		//int n = arr.length;
+		//		int x = -10;
+		//		int y = 5;0
+
+		//		System.out.println(findMinDist(arr, n, x, y));
+		//System.out.println(findMinDiff(arr, n));
+
+		//		pairsDiff();
+		//		palindrome("malayalam");
+		//		stringWordsReverse();
+		//		matrixAddition();
+		//		stringReverse();
+		//		dateFormat();
+		//		asce();
+		//		minMax();
+		//		duplicateArrays();
+		//		loop1();
+		//		loop2();
+		//		secondMaxMin();
+		//		lowerToUpper("BaskerPraveenPavan");
+
+	}
+
+}
+
+
