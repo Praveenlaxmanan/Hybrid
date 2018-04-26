@@ -1677,3 +1677,32 @@ public class Quiz {
 }
 
 
+public static void setBrowserSize(){
+
+		driver.navigate().to("http://google.co.in");
+		System.out.println(driver.manage().window().getSize());
+		Dimension d = new Dimension(420,600);
+		//Resize the current window to the given dimension
+		driver.manage().window().setSize(d);
+
+	}
+
+	public static void getElementSize(){
+
+		driver.manage().window().maximize();
+		driver.get("http://www.testingbar.com/");
+
+		//Locate element(Here it is Logo) for which you wants to get height and width.
+		WebElement Image = driver.findElement(By.xpath("//*[@id='masthead']/div/div[1]/a/img"));
+		Dimension d = Image.getSize();
+		//Get width of element.
+		int ImageWidth = d.getWidth();
+		System.out.println("Image width Is "+ImageWidth+" pixels");
+
+		//Get height of element.
+		int ImageHeight = d.getHeight();        
+		System.out.println("Image height Is "+ImageHeight+" pixels");
+
+		driver.quit();
+
+	}
